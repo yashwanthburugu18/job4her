@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOBFORHER | Jobs Dashboard</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",system-ui;}
+    body{
+      background:#f8fafc;
+      color:#1f2937;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* HEADER */
+    header{
+      background:linear-gradient(135deg,#6d28d9,#ec4899);
+      background-size:200% 200%;
+      animation:headerGlow 6s ease infinite;
+      color:#fff;
+      padding:1.1rem 2rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 8px 25px rgba(0,0,0,0.2);
+    }
+    @keyframes headerGlow{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    header h1{
+      font-size:1.5rem;
+      font-weight:700;
+      letter-spacing:0.4px;
+    }
+    header p{
+      font-size:0.85rem;
+      opacity:0.9;
+    }
+    #logout-btn{
+      padding:0.55rem 1.4rem;
+      background:#fff;
+      color:#6d28d9;
+      border:none;
+      border-radius:22px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 6px 20px rgba(0,0,0,0.25);
+      transition:0.3s;
+    }
+    #logout-btn:hover{
+      transform:translateY(-2px) scale(1.03);
+      background:#f1f5f9;
+    }
+
+    /* MAIN */
+    main{
+      flex:1;
+      padding:2.5rem 2rem;
+    }
+    .job-list{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:1.8rem;
+    }
+
+    .job-card{
+      background:#fff;
+      border-radius:18px;
+      padding:1.6rem 1.4rem;
+      box-shadow:0 12px 35px rgba(0,0,0,0.08);
+      transition:0.35s ease;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* ✅ FIX: overlay no longer blocks clicks */
+    .job-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,rgba(109,40,217,0.15),rgba(236,72,153,0.15));
+      opacity:0;
+      transition:0.35s;
+      pointer-events:none;
+    }
+
+    .job-card:hover::before{opacity:1;}
+    .job-card:hover{
+      transform:translateY(-6px) scale(1.01);
+      box-shadow:0 20px 50px rgba(99,102,241,0.2);
+    }
+
+    .job-card h3{
+      color:#6d28d9;
+      margin-bottom:0.4rem;
+      font-size:1.1rem;
+    }
+    .job-card p{
+      font-size:0.9rem;
+      color:#475569;
+      margin-bottom:0.6rem;
+      position:relative;
+      z-index:2;
+    }
+
+    .job-card a{
+      display:inline-block;
+      margin-top:0.6rem;
+      padding:0.45rem 1.1rem;
+      background:linear-gradient(135deg,#6d28d9,#ec4899);
+      color:#fff;
+      border-radius:20px;
+      font-size:0.85rem;
+      font-weight:600;
+      transition:0.3s;
+      box-shadow:0 6px 18px rgba(99,102,241,0.35);
+      position:relative;
+      z-index:3;
+      cursor:pointer;
+      text-decoration:none;
+    }
+    .job-card a:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 25px rgba(236,72,153,0.5);
+    }
+
+    /* FOOTER */
+    footer{
+      text-align:center;
+      padding:1rem;
+      background:#f1f5f9;
+      font-size:0.85rem;
+      color:#475569;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>JOBFORHER Dashboard</h1>
+    <p>Curated work-from-home opportunities</p>
+  </div>
+  <button id="logout-btn">Logout</button>
+</header>
+
+<main>
+  <section class="job-list" id="job-list">
+    <!-- Jobs injected here -->
+  </section>
+</main>
+
+<footer>
+  © 2025 JOBFORHER · Empowering Women With Opportunities
+</footer>
+
+<script>
+window.onload = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please login to access the dashboard.");
+      window.location.href = "loginpage.html";
+    }
+  };
+
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    localStorage.clear();
+     window.location.href = "index.html";
+  });
+</script>
+<script src="script.js"></script>
+</body>
+</html>

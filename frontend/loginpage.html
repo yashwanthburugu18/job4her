@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JOBFORHER | Login & Register</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",system-ui;}
+    body{
+      min-height:100vh;
+      background:linear-gradient(135deg,#312e81,#7c3aed,#ec4899);
+      background-size:300% 300%;
+      animation:bgMove 10s ease infinite;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    @keyframes bgMove{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    .container{
+      width:420px;
+      max-width:92%;
+      padding:2.5rem 2rem;
+      background:rgba(255,255,255,0.15);
+      backdrop-filter:blur(16px);
+      border-radius:20px;
+      box-shadow:0 25px 60px rgba(0,0,0,0.35);
+      animation:fadeUp 1s ease;
+      text-align:center;
+    }
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(40px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    h2{
+      color:#fff;
+      margin-bottom:1.2rem;
+      letter-spacing:0.5px;
+      font-size:1.8rem;
+    }
+    .tab-toggle{
+      display:flex;
+      justify-content:center;
+      gap:2rem;
+      margin-bottom:1.8rem;
+    }
+    .tab-toggle button{
+      background:none;
+      border:none;
+      color:#e5e7eb;
+      font-weight:600;
+      font-size:1rem;
+      cursor:pointer;
+      padding-bottom:0.4rem;
+      border-bottom:2px solid transparent;
+      transition:0.3s;
+    }
+    .tab-toggle button.active{
+      color:#fff;
+      border-bottom:2px solid #fff;
+    }
+    form{
+      display:none;
+      flex-direction:column;
+      gap:1.1rem;
+      animation:formFade 0.6s ease;
+    }
+    @keyframes formFade{
+      from{opacity:0;transform:translateY(15px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    form.active{display:flex;}
+    .field{
+      position:relative;
+    }
+    .field input{
+      width:100%;
+      padding:14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.35);
+      background:transparent;
+      color:#fff;
+      font-size:15px;
+      outline:none;
+      transition:0.3s;
+    }
+    .field input::placeholder{color:transparent;}
+    .field label{
+      position:absolute;
+      left:14px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#e5e7eb;
+      font-size:14px;
+      pointer-events:none;
+      transition:0.3s;
+      padding:0 6px;
+    }
+    .field input:focus,
+    .field input:valid{
+      border-color:#fff;
+      box-shadow:0 0 12px rgba(255,255,255,0.4);
+    }
+    .field input:focus+label,
+    .field input:valid+label{
+      top:-9px;
+      font-size:12px;
+      background:rgba(49,46,129,0.85);
+      border-radius:6px;
+      color:#fff;
+    }
+    .forgot-link{
+      text-align:right;
+      font-size:0.85rem;
+    }
+    .forgot-link a{
+      color:#e0e7ff;
+      text-decoration:none;
+      transition:0.3s;
+    }
+    .forgot-link a:hover{text-decoration:underline;}
+    .submit-btn{
+      margin-top:0.4rem;
+      padding:14px;
+      border:none;
+      border-radius:14px;
+      background:linear-gradient(135deg,#38bdf8,#8b5cf6,#ec4899);
+      background-size:200% 200%;
+      animation:btnGlow 4s ease infinite;
+      color:#fff;
+      font-weight:600;
+      letter-spacing:0.4px;
+      cursor:pointer;
+      box-shadow:0 14px 35px rgba(139,92,246,0.5);
+      transition:0.25s;
+    }
+    @keyframes btnGlow{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    .submit-btn:hover{
+      transform:translateY(-2px) scale(1.01);
+      box-shadow:0 18px 45px rgba(236,72,153,0.6);
+    }
+    .switch-text{
+      font-size:0.85rem;
+      color:#e5e7eb;
+    }
+    .switch-text a{
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+      text-decoration:none;
+    }
+    .switch-text a:hover{text-decoration:underline;}
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>JOBFORHER</h2>
+
+    <div class="tab-toggle">
+      <button id="login-tab" class="active">Login</button>
+      <button id="register-tab">Register</button>
+    </div>
+
+    <!-- LOGIN -->
+    <form id="login-form" class="active">
+      <div class="field">
+        <input type="email" name="email" required />
+        <label>Email</label>
+      </div>
+      <div class="field">
+        <input type="password" name="password" required />
+        <label>Password</label>
+      </div>
+      <div class="forgot-link">
+        <a id="show-forgot" href="#">Forgot password?</a>
+      </div>
+      <button type="submit" class="submit-btn">Login</button>
+      <p class="switch-text">Don't have an account? <a id="show-register" href="#">Register</a></p>
+    </form>
+
+    <!-- REGISTER -->
+    <form id="register-form">
+      <div class="field">
+        <input type="text" name="name" required />
+        <label>Full Name</label>
+      </div>
+      <div class="field">
+        <input type="email" name="email" required />
+        <label>Email</label>
+      </div>
+      <div class="field">
+        <input type="password" name="password" required />
+        <label>Password</label>
+      </div>
+      <div class="field">
+        <input type="password" name="confirmPassword" required />
+        <label>Confirm Password</label>
+      </div>
+      <button type="submit" class="submit-btn">Register</button>
+      <p class="switch-text">Already have an account? <a id="show-login" href="#">Login</a></p>
+    </form>
+
+    <!-- FORGOT -->
+    <form id="forgot-form">
+      <div class="field">
+        <input type="email" name="email" required />
+        <label>Registered Email</label>
+      </div>
+      <button type="submit" class="submit-btn">Send Reset Link</button>
+      <p class="switch-text"><a id="back-to-login" href="#">Back to Login</a></p>
+    </form>
+
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const loginTab = document.getElementById('login-tab');
+  const registerTab = document.getElementById('register-tab');
+  const loginForm = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+  const forgotForm = document.getElementById('forgot-form');
+
+  const showRegister = document.getElementById('show-register');
+  const showLogin = document.getElementById('show-login');
+  const showForgot = document.getElementById('show-forgot');
+  const backToLogin = document.getElementById('back-to-login');
+
+  function showLoginForm() {
+    loginTab.classList.add('active');
+    registerTab.classList.remove('active');
+    loginForm.classList.add('active');
+    registerForm.classList.remove('active');
+    forgotForm.classList.remove('active');
+  }
+
+  function showRegisterForm() {
+    loginTab.classList.remove('active');
+    registerTab.classList.add('active');
+    loginForm.classList.remove('active');
+    registerForm.classList.add('active');
+    forgotForm.classList.remove('active');
+  }
+
+  function showForgotForm() {
+    loginTab.classList.remove('active');
+    registerTab.classList.remove('active');
+    loginForm.classList.remove('active');
+    registerForm.classList.remove('active');
+    forgotForm.classList.add('active');
+  }
+
+  loginTab.addEventListener('click', showLoginForm);
+  registerTab.addEventListener('click', showRegisterForm);
+  showRegister.addEventListener('click', e => { e.preventDefault(); showRegisterForm(); });
+  showLogin?.addEventListener('click', e => { e.preventDefault(); showLoginForm(); });
+  showForgot.addEventListener('click', e => { e.preventDefault(); showForgotForm(); });
+  backToLogin.addEventListener('click', e => { e.preventDefault(); showLoginForm(); });
+
+  // REGISTER
+  registerForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(registerForm).entries());
+    if (data.password !== data.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+     const res = await fetch("http://localhost:3000/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    alert(result.message);
+    if (result.success) showLoginForm();
+  });
+
+  // LOGIN
+  loginForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(loginForm).entries());
+    const res = await fetch("http://localhost:3000/login", {
+       method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+     alert(result.message === "Login successful" ? "Welcome " + result.name :'User');
+    if (result.message === "Login successful") {
+      localStorage.setItem("token", result.token);
+       localStorage.setItem("name", result.name);
+       setTimeout(() => {
+        window.location.href = "./jobsdashboard.html";
+      }, 500);
+      setTimeout(() => {
+        window.location.href = "./jobsdashboard.html";
+      }, 500);
+    }
+  });
+
+  // FORGOT
+  forgotForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(forgotForm).entries());
+    const res = await fetch("http://localhost:3000/forgot-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    alert(result.message);
+    if (result.success) showLoginForm();
+  });
+});
+</script>
+</body>
+</html>
