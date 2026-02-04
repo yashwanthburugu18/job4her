@@ -116,3 +116,5 @@ document.addEventListener("DOMContentLoaded", () => {
     jobList.appendChild(jobCard);
   });
 });
+
+

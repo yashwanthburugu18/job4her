@@ -118,7 +118,8 @@
       e.preventDefault();
       const email = e.target.email.value;
       const newPassword = e.target.newPassword.value;
-  const res = await fetch(`http://localhost:3000/reset-password`, {
+ // const res = await fetch(`http://localhost:3000/reset-password`, {
+      const res = await fetch(`https://job4her.onrender.com/reset-password`, {
          method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, newPassword }),
