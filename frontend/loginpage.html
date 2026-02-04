@@ -309,7 +309,9 @@ document.addEventListener('DOMContentLoaded', function () {
   forgotForm.addEventListener('submit', async e => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(forgotForm).entries());
-    const res = await fetch("https://job4her.onrender.com/forgot-password", {
+      // const res = await fetch("http://localhost:3000/send-reset-link", {
+
+    const res = await fetch("https://job4her.onrender.com/send-reset-link", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)

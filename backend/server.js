@@ -116,7 +116,7 @@ app.post("/send-reset-link", async (req, res) => {
       to: email,
       subject: "Your Password Reset Link",
       html: `<h2>Link Click here</h2>
-      <a href="https://jobforher.vercel.app/reset.html">Reset Password</a>
+      <a href="https://jobforher.netlify.app/reset.html">Reset Password</a>
              <p>If you didn't request this, please ignore this email.</p>`
     };
 
