@@ -53,9 +53,24 @@
     }
     #logout-btn:hover{
       transform:translateY(-2px) scale(1.03);
-      background:#f1f5f9;
+      background:#ff0000;
+    }
+#HomeBtn{
+      padding:0.55rem 1.4rem;
+      background:#fff;
+      color:#6d28d9;
+      border:none;
+      border-radius:22px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 6px 20px rgba(0,0,0,0.25);
+      transition:0.3s;
     }
 
+    #HomeBtn:hover{
+      transform:translateY(-2px) scale(1.03);
+      background:#f1f5f9;
+    }
     /* MAIN */
     main{
       flex:1;
@@ -147,7 +162,9 @@
     <h1>JOBFORHER Dashboard</h1>
     <p>Curated work-from-home opportunities</p>
   </div>
-  <button id="logout-btn">Logout</button>
+  <button id="HomeBtn">Home</button>
+   <button id="logout-btn">Logout</button>
+
 </header>
 
 <main>
@@ -172,6 +189,10 @@ window.onload = () => {
   document.getElementById('logout-btn').addEventListener('click', () => {
     localStorage.clear();
      window.location.href = "index.html";
+  }); 
+
+    document.getElementById('HomeBtn').addEventListener('click', () => {
+    window.location.href = "index.html";
   });
 </script>
 <script src="script.js"></script>
