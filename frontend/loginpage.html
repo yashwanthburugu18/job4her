@@ -272,21 +272,21 @@ document.addEventListener('DOMContentLoaded', function () {
       alert("Passwords do not match!");
       return;
     }
-     const res = await fetch("http://localhost:3000/register", {
+     const res = await fetch("https://job4her.onrender.com/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     });
     const result = await res.json();
     alert(result.message);
-    if (result.success) showLoginForm();
+    if (result.signup) showLoginForm();
   });
 
   // LOGIN
   loginForm.addEventListener('submit', async e => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(loginForm).entries());
-    const res = await fetch("http://localhost:3000/login", {
+    const res = await fetch("https://job4her.onrender.com/login", {
        method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function () {
   forgotForm.addEventListener('submit', async e => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(forgotForm).entries());
-    const res = await fetch("http://localhost:3000/forgot-password", {
+    const res = await fetch("https://job4her.onrender.com/forgot-password", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)

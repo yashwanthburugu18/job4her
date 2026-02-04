@@ -54,9 +54,9 @@ app.post("/register", async (req, res) => {
       password: hash,
     });
     await newUser.save();
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ message: "User registered successfully",signup:true });
 
-  } catch {
+  } catch (error) {
     res.status(500).json({ message: "error while creating  new user" });
   }
 });
@@ -122,10 +122,10 @@ app.post("/send-reset-link", async (req, res) => {
 
     await transporter.sendMail(mailOptions);
 
-    res.status(200).json({ message: "OTP sent to your email" });
+    res.status(200).json({ message: "Reset link sent to your email" });
   } catch (error) {
-    console.error("Error sending OTP:", error);
-    res.status(500).json({ message: "Error sending OTP" });
+    console.error("Error sending reset link:", error);
+    res.status(500).json({ message: "Error sending reset link" });
   }
 });
 
