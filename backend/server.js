@@ -9,12 +9,15 @@ const dontenv = require("dotenv");
 dontenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://jobforher.in"
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // --------------------
-// MySQL Connection
+//Mongodb Connection
 // --------------------
 const  connectToDatabase = async()=>{
   try {

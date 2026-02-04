@@ -317,6 +317,7 @@ document.addEventListener('DOMContentLoaded', function () {
       body: JSON.stringify(data)
     });
     const result = await res.json();
+    console.log(result);
     alert(result.message);
     if (result.success) showLoginForm();
   });
