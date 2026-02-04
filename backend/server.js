@@ -96,48 +96,53 @@ app.post("/login", (req, res) => {
 
 // Email Transporter
 // --------------------
+ 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASS,
   },
+  connectionTimeout: 10000,
 });
-// --------------------
-// SEND RESET LINK
-// --------------------
-app.post("/send-reset-link", async (req, res) => {
-  const { email } = req.body;
 
-  if (!email)
-    return res.status(400).json({ message: "Email is required" });
+  // --------------------
+  // SEND RESET LINK
+  // --------------------
+  app.post("/send-reset-link", async (req, res) => {
+    const { email } = req.body;
 
-  try {
-    const user = await User.findOne({ email });
+    if (!email)
+      return res.status(400).json({ message: "Email is required" });
+
+    try {
+      const user = await User.findOne({ email });
+      
+      if (!user)
+        return res.status(400).json({ message: "User not found" });
+
     
-    if (!user)
-      return res.status(400).json({ message: "User not found" });
 
-  
+      // Send OTP via email
+      const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "Your Password Reset Link",
+        html: `<h2>Link Click here</h2>
+        <a href="https://jobforher.in/reset.html">Reset Password</a>
+              <p>If you didn't request this, please ignore this email.</p>`
+      };
 
-    // Send OTP via email
-    const mailOptions = {
-      from: process.env.EMAIL,
-      to: email,
-      subject: "Your Password Reset Link",
-      html: `<h2>Link Click here</h2>
-      <a href="https://jobforher.netlify.app/reset.html">Reset Password</a>
-             <p>If you didn't request this, please ignore this email.</p>`
-    };
+      await transporter.sendMail(mailOptions);
 
-    await transporter.sendMail(mailOptions);
-
-    res.status(200).json({ message: "Reset link sent to your email" });
-  } catch (error) {
-    console.error("Error sending reset link:", error);
-    res.status(500).json({ message: "Error sending reset link" });
-  }
-});
+      res.status(200).json({ message: "Reset link sent to your email" });
+    } catch (error) {
+      console.error("Error sending reset link:", error);
+      res.status(500).json({ message: "Error sending reset link" });
+    }
+  });
 
  // --------------------
  
