@@ -74,23 +74,26 @@ app.post("/register", async (req, res) => {
 // --------------------
 // LOGIN
 // --------------------
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password)
     return res.status(400).json({ message: "All fields required" });
 
-  User.findOne({ email }).then((user) => {
+  try {
+    const user = await User.findOne({ email });
     if (!user)
       return res.status(400).json({ message: "Invalid email or password" });
-    bcrypt.compare(password, user.password).then((isMatch) => {
-      if (!isMatch)
-        return res.status(400).json({ message: "Invalid email or password" });
-      res.status(200).json({ message: "Login successful", token:'jobforher@login',name:user.name});
-    });
-  }).catch((err) => {
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid email or password" });
+
+    res.status(200).json({ message: "Login successful", token: 'jobforher@login', name: user.name });
+  } catch (err) {
+    console.error("Error during login:", err);
     res.status(500).json({ message: "Error during login" });
-  });
+  }
 });
 
 

@@ -274,54 +274,95 @@ document.addEventListener('DOMContentLoaded', function () {
       alert("Passwords do not match!");
       return;
     }
-     const res = await fetch("https://job4her.onrender.com/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    alert(result.message);
-    if (result.signup) showLoginForm();
+    
+    const submitBtn = registerForm.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '🔄 Registering...';
+    submitBtn.disabled = true;
+    
+    try {
+      const res = await fetch("https://job4her.onrender.com/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      alert(result.message);
+      if (result.signup) showLoginForm();
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    } catch (error) {
+      console.error("Register error:", error);
+      alert("Error during registration. Please try again.");
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
   });
 
   // LOGIN
   loginForm.addEventListener('submit', async e => {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(loginForm).entries());
-    const res = await fetch("https://job4her.onrender.com/login", {
-       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    const result = await res.json();
-     alert(result.message === "Login successful" ? "Welcome " + result.name :'User');
-    if (result.message === "Login successful") {
-      localStorage.setItem("token", result.token);
-       localStorage.setItem("name", result.name);
-       setTimeout(() => {
+    const submitBtn = loginForm.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    
+    // Show loading state
+    submitBtn.textContent = '🔄 Logging in...';
+    submitBtn.disabled = true;
+    
+    try {
+      const data = Object.fromEntries(new FormData(loginForm).entries());
+      const res = await fetch("https://job4her.onrender.com/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      
+      if (result.message === "Login successful") {
+        localStorage.setItem("token", result.token);
+        localStorage.setItem("name", result.name);
+        alert("Welcome " + result.name);
         window.location.href = "./jobsdashboard.html";
-      }, 500);
-      setTimeout(() => {
-        window.location.href = "./jobsdashboard.html";
-      }, 500);
+      } else {
+        alert(result.message);
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Connection error. Please try again.");
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
     }
   });
 
   // FORGOT
   forgotForm.addEventListener('submit', async e => {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(forgotForm).entries());
-      // const res = await fetch("http://localhost:3000/send-reset-link", {
-
-    const res = await fetch("https://job4her.onrender.com/send-reset-link", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    console.log(result);
-    alert(result.message);
-    if (result.success) showLoginForm();
+    const submitBtn = forgotForm.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '🔄 Sending...';
+    submitBtn.disabled = true;
+    
+    try {
+      const data = Object.fromEntries(new FormData(forgotForm).entries());
+      const res = await fetch("https://job4her.onrender.com/send-reset-link", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      console.log(result);
+      alert(result.message);
+      if (result.success) showLoginForm();
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    } catch (error) {
+      console.error("Forgot password error:", error);
+      alert("Error sending reset link. Please try again.");
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
   });
 });
 </script>
